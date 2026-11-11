@@ -94,3 +94,13 @@ Verified successful policy application on CLIENT01 using `gpupdate /force`, `gpr
 **Functional lab — ongoing development**
 
 Planned enhancements include additional Group Policy configurations, account lockout controls, administrative auditing, and further security validation.
+
+## Security Validation Screenshots
+
+### Delegated Administration — Access Denied
+
+![Access denied when attempting to reset a Finance user's password](screenshots/delegation-access-denied.png)
+
+### Group Policy — Domain Firewall Enforcement
+
+![Windows Defender Firewall Domain Profile enforced by Group Policy](screenshots/gpo-domain-firewall-verified.png)
