@@ -1,2 +1,96 @@
-# enterprise-active-directory-lab
-Windows Server 2025 Active Directory lab featuring OU design, RBAC, delegated administration, RSAT, and Group Policy security.
+# Enterprise Active Directory Lab
+
+**Windows Server 2025 | Windows 11 Pro | Active Directory | Group Policy | VMware Workstation**
+
+## Project Overview
+
+Designed and deployed a virtualized Windows enterprise environment to demonstrate Active Directory administration, organizational unit design, role-based access control (RBAC), delegated administration, and centralized workstation security management.
+
+The lab focuses on practical enterprise IT operations, security best practices, and least-privilege administration.
+
+## Lab Infrastructure
+
+| Component | Configuration |
+|---|---|
+| Hypervisor | VMware Workstation |
+| Domain Controller | DC01 — Windows Server 2025 |
+| Client Workstation | CLIENT01 — Windows 11 Pro |
+| Active Directory Domain | corp.example.test |
+| Domain Controller IP | 192.168.16.10 |
+| Virtual Network | VMware NAT (VMnet8) |
+| DNS | Active Directory-integrated DNS |
+
+## Active Directory Architecture
+
+Created a departmental OU structure to support organized administration and policy targeting.
+
+```text
+corp.example.test
+├── Corporate
+│   ├── Finance
+│   ├── Human Resources
+│   ├── IT
+│   │   ├── Computers
+│   │   ├── Groups
+│   │   └── Users
+│   ├── Operations
+│   ├── Sales
+│   └── Workstations
+└── Domain Controllers
+```
+
+## Role-Based Access Control and Delegation
+
+Created the `SG_IT_Support` global security group and delegated limited administrative permissions over the IT Users OU.
+
+**Delegated capabilities:**
+- Reset user passwords
+- Require password changes at next logon
+- Read user information
+
+Validated delegation using a standard domain account through Remote Server Administration Tools (RSAT) on CLIENT01.
+
+### Security Validation
+
+| Test | Result |
+|---|---|
+| IT technician resets an IT user's password | PASS |
+| IT technician attempts to reset a Finance user's password | ACCESS DENIED |
+| Remote Active Directory administration using RSAT | PASS |
+| Administrative access restricted by OU scope | PASS |
+
+## Group Policy Security Baseline
+
+Created `GPO_Workstation_Security_Baseline` and linked it to the Corporate Workstations OU.
+
+Configured Windows Defender Firewall Domain Profile:
+
+| Setting | Configuration |
+|---|---|
+| Firewall state | Enabled |
+| Inbound connections | Block by default |
+| Outbound connections | Allow by default |
+
+Verified successful policy application on CLIENT01 using `gpupdate /force`, `gpresult`, and Windows Defender Firewall with Advanced Security.
+
+## Technical Skills Demonstrated
+
+- Windows Server 2025 administration
+- Active Directory Domain Services (AD DS)
+- DNS and domain controller discovery
+- Organizational Unit design
+- Security group management
+- Role-based access control (RBAC)
+- Least-privilege delegation
+- Remote Server Administration Tools (RSAT)
+- Group Policy Management (GPMC)
+- Windows Defender Firewall
+- Domain-joined Windows 11 administration
+- VMware virtual networking
+- Enterprise troubleshooting and validation
+
+## Project Status
+
+**Functional lab — ongoing development**
+
+Planned enhancements include additional Group Policy configurations, account lockout controls, administrative auditing, and further security validation.
