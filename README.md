@@ -123,3 +123,18 @@ policies using Windows Server 2025 Active Directory.
   Users and Computers after five failed login attempts
 
 ![Active Directory account lockout successfully verified](screenshots/account-lockout-verified.png)
+
+### Domain Password Policy — Security Hardening
+
+Configured and verified domain-wide password security
+settings using Windows Server 2025 Group Policy.
+
+- Minimum password length: 14 characters
+- Password history: 24 passwords remembered
+- Minimum password age: 1 day
+- Maximum password age: 90 days (lab configuration)
+- Password complexity requirements: Enabled
+- Verification: `gpupdate /force` followed by
+  `net accounts /domain`
+
+![Verified Active Directory domain password and lockout policies](screenshots/domain-password-policy-verified.png)
