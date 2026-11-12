@@ -183,3 +183,53 @@ reset activity.
 Advanced Audit Policy Configuration, Group Policy,
 Kerberos authentication analysis, account lockout
 investigation, and Active Directory security monitoring.
+
+
+### Microsoft Defender Antivirus Security — Group Policy
+
+Implemented centralized Microsoft Defender Antivirus security controls through Active Directory Group Policy on Windows 11 domain-joined workstations.
+
+**Group Policy Configuration**
+- GPO Name: `GPO-Workstations-Defender-Security`
+- Linked OU: `Corporate/Workstations`
+- Turn off Microsoft Defender Antivirus: Disabled
+- Turn off real-time protection: Disabled
+- Microsoft MAPS membership: Advanced MAPS
+- Cloud protection level: High
+
+**Validation and Testing**
+
+Executed `gpupdate /force` on `CLIENT01` to refresh Group Policy.
+
+Verified the Defender security GPO was applied using:
+
+`gpresult /r /scope computer`
+
+Validated Microsoft Defender protection using PowerShell:
+
+`Get-MpComputerStatus`
+
+Confirmed:
+- Antivirus service enabled
+- Antivirus protection enabled
+- Real-time protection enabled
+- Downloaded-file and attachment scanning enabled
+- Network Inspection System enabled
+
+Verified cloud protection configuration using:
+
+`Get-MpPreference`
+
+Results:
+- MAPSReporting: 2 (Advanced MAPS)
+- CloudBlockLevel: 2 (High)
+- SubmitSamplesConsent: 1 (Prompt before sample submission)
+
+**Security Outcome**
+
+Successfully applied centralized Microsoft Defender security policies to a domain-joined Windows 11 workstation and verified effective protection settings through PowerShell.
+
+**Evidence**
+
+![Microsoft Defender Security Validation](screenshots/defender-security-validation.png)
+
