@@ -104,3 +104,16 @@ Planned enhancements include additional Group Policy configurations, account loc
 ### Group Policy — Domain Firewall Enforcement
 
 ![Windows Defender Firewall Domain Profile enforced by Group Policy](screenshots/gpo-domain-firewall-verified.png)
+
+### Account Lockout Policy — Security Validation
+
+Configured and successfully tested domain account lockout
+policies using Windows Server 2025 Active Directory.
+
+- Lockout threshold: 5 failed login attempts
+- Lockout duration: 10 minutes
+- Reset account lockout counter: 10 minutes
+- Validation: Confirmed account lockout in Active Directory
+  Users and Computers after five failed login attempts
+
+![Active Directory account lockout successfully verified](screenshots/account-lockout-verified.png)
