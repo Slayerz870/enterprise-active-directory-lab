@@ -95,12 +95,17 @@ Verified successful policy application on CLIENT01 using `gpupdate /force`, `gpr
 
 Completed security implementations include delegated
 administration, workstation firewall enforcement through
-Group Policy, domain account lockout protection, and
-domain password policy hardening.
+Group Policy, domain account lockout protection,
+domain password policy hardening, and Windows Security
+Event auditing.
 
-Planned enhancements include Windows security event
-auditing, administrative activity monitoring, and
-additional security validation.
+Validated security events include Event ID 4740
+(account lockout), Event ID 4771 (Kerberos authentication
+failure), and Event ID 4724 (administrative password reset).
+
+Planned enhancements include additional Group Policy
+security controls, administrative activity monitoring,
+and automated system administration.
 
 ## Security Validation Screenshots
 
