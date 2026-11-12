@@ -95,11 +95,12 @@ Verified successful policy application on CLIENT01 using `gpupdate /force`, `gpr
 
 Completed security implementations include delegated
 administration, workstation firewall enforcement through
-Group Policy, and domain account lockout protection.
+Group Policy, domain account lockout protection, and
+domain password policy hardening.
 
-Planned enhancements include domain password policy
-hardening, administrative auditing, and additional
-security validation.
+Planned enhancements include Windows security event
+auditing, administrative activity monitoring, and
+additional security validation.
 
 ## Security Validation Screenshots
 
