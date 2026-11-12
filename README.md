@@ -139,3 +139,42 @@ settings using Windows Server 2025 Group Policy.
   `net accounts /domain`
 
 ![Verified Active Directory domain password and lockout policies](screenshots/domain-password-policy-verified.png)
+
+### Windows Security Auditing and Incident Investigation
+
+Configured and validated Active Directory security auditing
+on Windows Server 2025 to investigate authentication
+failures, account lockouts, and administrative password
+reset activity.
+
+**Event ID 4740 — Account Lockout**
+
+- Identified the locked account: `CORP\securitytest`
+- Traced the originating workstation to `CLIENT01`
+- Confirmed the domain controller recorded the lockout
+
+![Event 4740 account lockout investigation](screenshots/event-4740-account-lockout.png)
+
+**Event ID 4771 — Kerberos Pre-Authentication Failure**
+
+- Enabled Kerberos failure auditing through Group Policy
+- Generated a controlled failed authentication attempt
+- Identified `securitytest` and source IP `192.168.16.129`
+- Interpreted failure code `0x18` as invalid
+  pre-authentication information
+
+![Event 4771 Kerberos authentication failure](screenshots/event-4771-kerberos-failure.png)
+
+**Event ID 4724 — Administrative Password Reset**
+
+- Reviewed an audited password reset attempt
+- Identified the initiating account: `CORP\Administrator`
+- Identified the target account: `CORP\securitytest`
+- Confirmed the event was recorded as Audit Success
+
+![Event 4724 administrative password reset](screenshots/event-4724-password-reset.png)
+
+**Skills Demonstrated:** Windows Event Viewer,
+Advanced Audit Policy Configuration, Group Policy,
+Kerberos authentication analysis, account lockout
+investigation, and Active Directory security monitoring.
