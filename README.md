@@ -93,7 +93,13 @@ Verified successful policy application on CLIENT01 using `gpupdate /force`, `gpr
 
 **Functional lab — ongoing development**
 
-Planned enhancements include additional Group Policy configurations, account lockout controls, administrative auditing, and further security validation.
+Completed security implementations include delegated
+administration, workstation firewall enforcement through
+Group Policy, and domain account lockout protection.
+
+Planned enhancements include domain password policy
+hardening, administrative auditing, and additional
+security validation.
 
 ## Security Validation Screenshots
 
