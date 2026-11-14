@@ -301,3 +301,68 @@ ASR audit-event generation and rule enforcement testing remain future validation
 
 ![Microsoft Defender Security Validation](screenshots/defender-security-validation.png)
 
+
+### ASR Security Event Investigation — Event ID 1122
+
+Investigated a Microsoft Defender Attack Surface Reduction (ASR) audit event on a domain-joined Windows 11 workstation using Windows Event Viewer.
+
+**Investigation Environment**
+
+- Domain: `corp.example.test`
+- Workstation: `CLIENT01`
+- Security Platform: Microsoft Defender Antivirus
+- Event Log: `Microsoft-Windows-Windows Defender/Operational`
+- Event ID: `1122`
+- Detection Mode: Audit
+
+**Event Details**
+
+| Property | Observed Value |
+|---|---|
+| Event ID | 1122 |
+| ASR Rule | Block credential stealing from LSASS |
+| Rule GUID | `9e6c4e1f-7d60-472f-ba1a-a39ef669e4b2` |
+| Event Time | November 13, 2026, 10:53:46 PM PST |
+| User Context | `NT AUTHORITY\SYSTEM` |
+| Initiating Process | `C:\Windows\System32\svchost.exe` |
+| Protected Process | `C:\Windows\System32\lsass.exe` |
+| Associated Service | SysMain |
+| Enforcement Result | Audited, not blocked |
+
+**Investigation Procedure**
+
+1. Opened Windows Event Viewer on `CLIENT01`.
+2. Navigated to `Applications and Services Logs > Microsoft > Windows > Windows Defender > Operational`.
+3. Filtered the Operational log for Event ID `1122`.
+4. Examined the event's General and Details tabs.
+5. Identified the triggering ASR rule using its GUID.
+6. Reviewed the associated process paths, user context, and command-line information.
+
+**Technical Analysis**
+
+Microsoft Defender recorded an ASR audit event associated with an interaction involving `svchost.exe` and the protected LSASS process.
+
+The target command line referenced the Windows SysMain service:
+
+`C:\WINDOWS\system32\svchost.exe -k LocalSystemNetworkRestricted -p -s SysMain`
+
+The event was generated under the `NT AUTHORITY\SYSTEM` security context.
+
+Because the LSASS protection rule was configured in Audit Mode, Microsoft Defender recorded the activity without enforcing a block.
+
+The event does not independently establish credential theft, malicious activity, or system compromise. The involvement of Windows system processes suggests that legitimate operating-system activity is a possible explanation.
+
+**Investigation Outcome**
+
+Successfully identified and analyzed a Microsoft Defender ASR audit event generated on a domain-joined workstation.
+
+Confirmed that the LSASS credential protection rule produced security telemetry while operating in Audit Mode.
+
+Further investigation would be required before classifying the activity as malicious or enabling blocking based on this event alone.
+
+**Evidence**
+
+![Microsoft Defender ASR Event 1122 Investigation](screenshots/event-1122-asr-lsass-audit.png)
+
+**Skills Demonstrated:** Windows Event Viewer, Microsoft Defender, Attack Surface Reduction, endpoint security monitoring, LSASS protection, Windows process analysis, security event investigation, and technical documentation.
+
