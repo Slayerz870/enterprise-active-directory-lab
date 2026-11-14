@@ -229,6 +229,74 @@ Results:
 
 Successfully applied centralized Microsoft Defender security policies to a domain-joined Windows 11 workstation and verified effective protection settings through PowerShell.
 
+
+### Microsoft Defender Attack Surface Reduction (ASR) — Audit Mode
+
+Implemented centralized Microsoft Defender Attack Surface Reduction (ASR) policies through Active Directory Group Policy to strengthen endpoint security and evaluate potentially malicious behavior on domain-joined Windows 11 workstations.
+
+**Group Policy Configuration**
+
+- GPO Name: `GPO-Workstations-ASR-Protection`
+- Linked OU: `Corporate/Workstations`
+- Target Workstation: `CLIENT01`
+- Deployment Method: Active Directory Group Policy
+- Configuration Mode: Audit (`2`)
+
+**Configured ASR Rules**
+
+| Security Rule | Rule GUID | Mode |
+|---|---|---|
+| Block Office applications from creating child processes | `d4f940ab-401b-4efc-aadc-ad5f3c50688a` | Audit |
+| Block credential stealing from LSASS | `9e6c4e1f-7d60-472f-ba1a-a39ef669e4b2` | Audit |
+| Block executable content from email client and webmail | `be9ba2d9-53ea-4cdc-84e5-9b1eeee46550` | Audit |
+| Block execution of potentially obfuscated scripts | `5beb7efe-fd9a-4556-801d-275e5ffc04cc` | Audit |
+
+**Deployment and Validation**
+
+Refreshed Group Policy on `CLIENT01`:
+
+`gpupdate /force`
+
+Verified the ASR GPO appeared under Applied Group Policy Objects:
+
+`gpresult /r /scope computer`
+
+Retrieved the effective ASR configuration using PowerShell:
+
+```powershell
+$ASR = Get-MpPreference
+
+$Results = for ($i = 0; $i -lt $ASR.AttackSurfaceReductionRules_Ids.Count; $i++) {
+    [PSCustomObject]@{
+        RuleGUID = $ASR.AttackSurfaceReductionRules_Ids[$i]
+        Action   = $ASR.AttackSurfaceReductionRules_Actions[$i]
+        Mode     = if ($ASR.AttackSurfaceReductionRules_Actions[$i] -eq 2) { "Audit" } else { "Other" }
+    }
+}
+
+$Results | Format-Table -AutoSize
+```
+
+**Validation Results**
+
+- ASR GPO successfully applied to `CLIENT01`.
+- All four configured ASR rule GUIDs detected.
+- All four rules verified with action value `2` (Audit).
+- Configuration verified through Microsoft Defender PowerShell cmdlets.
+
+**Security Outcome**
+
+Successfully deployed and validated centralized Microsoft Defender ASR policies in Audit Mode. This configuration enables evaluation of applicable ASR activity without enforcing blocking actions.
+
+ASR audit-event generation and rule enforcement testing remain future validation activities.
+
+**Evidence**
+
+![Microsoft Defender ASR Policy Validation](screenshots/asr-policy-validation.png)
+
+**Skills Demonstrated:** Active Directory, Group Policy Management, Microsoft Defender, Attack Surface Reduction, endpoint security hardening, PowerShell, security configuration validation.
+
+
 **Evidence**
 
 ![Microsoft Defender Security Validation](screenshots/defender-security-validation.png)
