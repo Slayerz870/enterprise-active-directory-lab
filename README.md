@@ -366,3 +366,55 @@ Further investigation would be required before classifying the activity as malic
 
 **Skills Demonstrated:** Windows Event Viewer, Microsoft Defender, Attack Surface Reduction, endpoint security monitoring, LSASS protection, Windows process analysis, security event investigation, and technical documentation.
 
+## Windows LAPS — Local Administrator Password Management
+
+Implemented and validated Windows Local Administrator Password Solution (LAPS) in a Windows Server 2025 Active Directory environment.
+
+### Configuration
+
+- **Domain:** `corp.example.test`
+- **Domain Controller:** `DC01`
+- **Managed Workstation:** `CLIENT01` (Windows 11)
+- **Group Policy:** `GPO-Workstations-Windows-LAPS`
+- **Managed Local Administrator:** `LabAdmin`
+- **Password Backup:** Active Directory
+- **Password Encryption:** Enabled
+- **Authorized Decryptors:** `CORP\Domain Admins`
+- **Password Length:** 20 characters
+- **Password Complexity:** Uppercase, lowercase, numbers, and special characters
+- **Password Rotation Interval:** 30 days
+- **Encrypted Password History:** 5
+
+### Deployment and Validation
+
+1. Extended the Active Directory schema with Windows LAPS attributes.
+2. Configured computer self-permissions on the Workstations OU.
+3. Created and linked the Windows LAPS Group Policy.
+4. Verified Group Policy application using `gpresult /r /scope computer`.
+5. Confirmed successful password rotation and Active Directory backup through Windows LAPS operational events.
+6. Verified encrypted password retrieval metadata using `Get-LapsADPassword`.
+
+**Validated Windows LAPS Events:**
+
+| Event ID | Description |
+|---|---|
+| 10018 | Successfully backed up the managed password to Active Directory |
+| 10020 | Successfully updated the local administrator password |
+| 10021 | Confirmed effective Windows LAPS policy configuration |
+| 10004 | Confirmed successful policy processing |
+
+### Security Validation
+
+PowerShell verification confirmed:
+
+- `Source: EncryptedPassword`
+- `DecryptionStatus: Success`
+- `AuthorizedDecryptor: CORP\Domain Admins`
+- Managed account: `LabAdmin`
+- Password expiration scheduled 30 days after the successful update
+
+The managed administrator password is not exposed in the repository.
+
+### Evidence
+
+![Windows LAPS Encrypted Password Validation](screenshots/laps-ad-password-validation.png)
