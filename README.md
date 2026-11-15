@@ -413,6 +413,63 @@ PowerShell verification confirmed:
 - Managed account: `LabAdmin`
 - Password expiration scheduled 30 days after the successful update
 
+- ## Windows LAPS — Least-Privilege Access Validation
+
+### Objective
+
+Validate that standard domain users cannot retrieve protected Windows LAPS credentials while authorized administrators retain access.
+
+### Test Environment
+
+- **Domain:** `corp.example.test`
+- **Domain Controller:** `DC01`
+- **Workstation:** `CLIENT01`
+- **Managed Local Administrator:** `LabAdmin`
+- **Standard Test Account:** `CORP\securitytest`
+- **Test Account Membership:** `Domain Users`
+
+### Security Test Results
+
+| Test | Result |
+|---|---|
+| Authorized administrator LAPS retrieval | Successful |
+| Encrypted password decryption | Successful |
+| Standard user Active Directory computer lookup | Successful |
+| Standard user LAPS password record retrieval | No data returned |
+| Plaintext password disclosure | Not observed |
+
+### Validation Commands
+
+Executed under the `CORP\securitytest` security context:
+
+```powershell
+whoami
+
+Get-LapsADPassword -Identity "CLIENT01" |
+    Format-List ComputerName, Account, Source, DecryptionStatus, AuthorizedDecryptor
+
+Get-ADComputer -Identity "CLIENT01" |
+    Select-Object Name, DistinguishedName
+```
+
+### Findings
+
+The standard domain user successfully queried the `CLIENT01` computer object in Active Directory but received no password record from `Get-LapsADPassword`.
+
+The previously validated Domain Administrator session successfully retrieved and decrypted the encrypted LAPS password record.
+
+These results are consistent with the intended least-privilege configuration. No administrator passwords were exposed during testing or included in the repository.
+
+### Evidence
+
+**Authorized administrator validation:**
+
+![Authorized Windows LAPS Validation](screenshots/laps-ad-password-validation.png)
+
+**Standard user access validation:**
+
+![Windows LAPS Least-Privilege Validation](screenshots/laps-unauthorized-access-validation.png)
+
 The managed administrator password is not exposed in the repository.
 
 ### Evidence
