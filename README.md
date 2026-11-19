@@ -475,3 +475,62 @@ The managed administrator password is not exposed in the repository.
 ### Evidence
 
 ![Windows LAPS Encrypted Password Validation](screenshots/laps-ad-password-validation.png)
+
+## Milestone 142 — Active Directory Security Auditing
+
+### Overview
+
+Developed and tested a read-only PowerShell security auditing script against a Windows Server 2025 Active Directory environment.
+
+The script evaluates identity security configurations, privileged account membership, password policies, and potential authentication weaknesses.
+
+### Security Audit Capabilities
+
+- **Disabled Accounts:** Identifies disabled Active Directory user accounts.
+- **Password Expiration:** Detects accounts configured with passwords that never expire.
+- **Inactive Accounts:** Identifies enabled accounts with recorded last logons older than 90 days.
+- **Privileged Groups:** Enumerates Domain Admins, Enterprise Admins, and Schema Admins.
+- **Service Principal Names:** Identifies user accounts with registered SPNs.
+- **Missing Logon History:** Identifies enabled accounts without a recorded replicated last-logon timestamp.
+- **Password Not Required:** Detects enabled accounts configured without a password requirement.
+- **Kerberos Preauthentication:** Identifies enabled accounts that do not require Kerberos preauthentication.
+
+### Lab Environment
+
+| Component | Configuration |
+|---|---|
+| Domain Controller | DC01 |
+| Operating System | Windows Server 2025 |
+| Active Directory Domain | corp.example.test |
+| Automation | Windows PowerShell |
+| AD Module | ActiveDirectory 1.0.1.0 |
+| Execution | Read-only |
+
+### Security Audit Findings
+
+Testing identified:
+
+- Two disabled built-in accounts: Guest and krbtgt.
+- A non-expiring password configuration on the built-in Administrator account.
+- Administrator as the only direct member of Domain Admins, Enterprise Admins, and Schema Admins.
+- Two enabled accounts without recorded replicated last-logon timestamps.
+- No enabled accounts configured with PasswordNotRequired.
+- No enabled accounts configured to bypass Kerberos preauthentication.
+
+These findings demonstrate identity security assessment and configuration review within a controlled Active Directory lab.
+
+### PowerShell Script
+
+**[View Get-ADSecurityAudit.ps1](scripts/Get-ADSecurityAudit.ps1)**
+
+Run from an authorized Windows system with the Active Directory PowerShell module installed:
+
+```powershell
+.\Get-ADSecurityAudit.ps1
+```
+
+The script performs read-only checks and does not modify Active Directory objects.
+
+### Skills Demonstrated
+
+Active Directory administration, identity security auditing, PowerShell automation, privileged access assessment, Kerberos security configuration, and technical documentation.
