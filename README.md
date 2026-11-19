@@ -733,3 +733,38 @@ Windows Server 2025, Active Directory Domain Services, PowerShell, Kerberos Auth
 [Get-ADAttackSurfaceAudit.ps1](scripts/Get-ADAttackSurfaceAudit.ps1)
 
 **Outcome:** Implemented automated Active Directory attack-surface auditing to improve visibility into Kerberos security, delegation configurations, and potentially risky administrative account settings.
+
+## Milestone 147 — Kerberos Security Auditing
+
+Implemented and validated Kerberos security auditing in the Windows Server 2025 Active Directory environment (`corp.example.test`).
+
+### Security Controls and Findings
+
+- **Kerberos encryption:** Verified AES-256 encryption for authentication and service tickets.
+- **KRBTGT account:** Confirmed the built-in account is disabled and reviewed its password age.
+- **Encryption compatibility:** Identified legacy RC4 support on DC01 for future hardening review.
+- **Authentication auditing:** Verified successful and failed Kerberos authentication auditing.
+- **Service-ticket auditing:** Enabled Success and Failure auditing through the Default Domain Controllers Policy.
+- **Security monitoring:** Verified Windows Security Event IDs 4768, 4769, and 4771.
+
+### Audit Results
+
+| Security Metric | Result |
+|---|---|
+| Event ID 4768 — TGT Requests | 105 |
+| Event ID 4769 — Service Ticket Requests | 4 |
+| AES-256 Ticket Encryption | 109 observed requests |
+| Event ID 4771 — Pre-Authentication Failures | 8 |
+| RC4-Encrypted Tickets Observed | 0 |
+
+All 109 recorded ticket requests in the audit report used AES-256 encryption. Eight pre-authentication failures were identified for further review; no malicious activity was confirmed.
+
+### PowerShell Automation
+
+**Script:** [Get-ADKerberosAudit.ps1](scripts/Get-ADKerberosAudit.ps1)
+
+Developed a read-only PowerShell auditing tool that examines KRBTGT account properties, domain controller encryption support, Kerberos audit policy, and authentication security events.
+
+The script generates a structured security report at `C:\Scripts\ADKerberos-Report.txt`.
+
+**Status:** Completed — November 19, 2026.
