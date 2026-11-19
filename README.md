@@ -689,3 +689,47 @@ Windows Server 2025, Active Directory Domain Services, PowerShell, ActiveDirecto
 [Get-ADPrivilegedAccessAudit.ps1](scripts/Get-ADPrivilegedAccessAudit.ps1)
 
 **Outcome:** Implemented automated privileged access auditing to improve visibility into administrative group memberships, account security configurations, and potential security risks.
+
+## Milestone 146 — Active Directory Attack Surface Security Auditing
+
+Developed and validated a read-only PowerShell security auditing tool to identify potentially risky Kerberos authentication and delegation configurations in a Windows Server 2025 Active Directory environment.
+
+### Implementation
+- Audited Active Directory objects with Kerberos preauthentication disabled.
+- Enumerated user accounts with Service Principal Names (SPNs).
+- Identified computer accounts configured for unconstrained delegation.
+- Examined traditional and resource-based constrained delegation configurations.
+- Audited user accounts configured for DES-only Kerberos encryption.
+- Identified user accounts trusted for Kerberos delegation.
+- Evaluated user account delegation restrictions.
+- Assessed the built-in Administrator account's delegation protection.
+- Generated an automated security assessment report.
+
+### Validation Results
+- **0 objects** identified with Kerberos preauthentication disabled.
+- **1 user account with an SPN:** the built-in `krbtgt` account.
+- **1 computer with unconstrained delegation:** `DC01`, the domain controller.
+- **0 objects** configured for traditional constrained delegation.
+- **0 objects** configured for resource-based constrained delegation.
+- **0 user accounts** configured for DES-only Kerberos encryption.
+- **0 user accounts** trusted for Kerberos delegation.
+- **0 user accounts** explicitly protected against delegation.
+- **1 security configuration** flagged for review.
+
+### Security Finding
+
+**REVIEW-001 — Administrator Delegation Protection**
+
+The built-in Administrator account was enabled with `AccountNotDelegated = False`.
+
+This configuration requires review because privileged accounts should generally be protected against Kerberos delegation.
+
+The audit was performed in read-only mode. No Active Directory security settings were modified.
+
+### Technologies
+Windows Server 2025, Active Directory Domain Services, PowerShell, Kerberos Authentication, ActiveDirectory Module, Security Auditing.
+
+### PowerShell Script
+[Get-ADAttackSurfaceAudit.ps1](scripts/Get-ADAttackSurfaceAudit.ps1)
+
+**Outcome:** Implemented automated Active Directory attack-surface auditing to improve visibility into Kerberos security, delegation configurations, and potentially risky administrative account settings.
