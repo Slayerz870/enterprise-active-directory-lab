@@ -650,3 +650,42 @@ Windows Server 2025, Active Directory Domain Services, Group Policy Management, 
 [Get-ADGPOAudit.ps1](scripts/Get-ADGPOAudit.ps1)
 
 **Outcome:** Implemented automated Group Policy security auditing with visibility into policy configuration, organizational scope, administrative permissions, and custom access control entries.
+
+## Milestone 145 — Active Directory Privileged Access Security Auditing
+
+Developed and validated a read-only PowerShell auditing tool to assess privileged group memberships and administrative account security in a Windows Server 2025 Active Directory environment.
+
+### Implementation
+- Audited nine privileged and security-sensitive Active Directory groups.
+- Enumerated direct and nested group memberships using recursive membership queries.
+- Identified unique privileged user accounts.
+- Evaluated administrative account status and password expiration settings.
+- Checked password modification dates and approximate last-logon activity.
+- Flagged potentially inactive administrative accounts using a 90-day threshold.
+- Examined the `AdminCount` attribute.
+- Generated a security audit report for administrative review.
+
+### Validation Results
+- **9 privileged groups** successfully audited.
+- **1 unique privileged user account** identified.
+- **4 privileged groups** contained the built-in Administrator account.
+- **5 groups** had no members returned by the recursive audit.
+- **0 privileged accounts** flagged as inactive for 90 days.
+- **1 security configuration** flagged for review: the enabled Administrator account has a non-expiring password.
+- **0 script execution errors** observed.
+
+### Security Findings
+
+**REVIEW-001 — Non-Expiring Administrator Password**
+
+The built-in Administrator account was configured with `PasswordNeverExpires = True`. This configuration requires review against organizational password management and privileged access policies.
+
+The audit was performed in read-only mode. No Active Directory accounts, group memberships, or security settings were modified.
+
+### Technologies
+Windows Server 2025, Active Directory Domain Services, PowerShell, ActiveDirectory Module, Privileged Access Auditing.
+
+### PowerShell Script
+[Get-ADPrivilegedAccessAudit.ps1](scripts/Get-ADPrivilegedAccessAudit.ps1)
+
+**Outcome:** Implemented automated privileged access auditing to improve visibility into administrative group memberships, account security configurations, and potential security risks.
