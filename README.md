@@ -534,3 +534,91 @@ The script performs read-only checks and does not modify Active Directory object
 ### Skills Demonstrated
 
 Active Directory administration, identity security auditing, PowerShell automation, privileged access assessment, Kerberos security configuration, and technical documentation.
+
+## Milestone 143 — Active Directory Password Security Auditing
+
+### Overview
+
+Developed and tested a PowerShell-based Active Directory Password Security Audit tool in a Windows Server 2025 enterprise lab environment.
+
+The script automates nine read-only security assessments to evaluate domain password policies, account security configurations, authentication protections, and potential identity security risks.
+
+### Security Audit Capabilities
+
+1. **Default Domain Password Policy** — Audits password complexity, minimum length, password history, expiration, and account lockout settings.
+2. **Fine-Grained Password Policies** — Identifies custom password policies configured within Active Directory.
+3. **Passwords Never Expire** — Detects enabled accounts configured with non-expiring passwords.
+4. **Password Not Required** — Identifies enabled accounts with the PasswordNotRequired flag.
+5. **Password Change Required** — Detects accounts configured to change passwords at their next logon.
+6. **Account Lockouts** — Identifies currently locked-out accounts.
+7. **Expired Passwords** — Reports accounts with expired passwords.
+8. **Disabled Accounts** — Enumerates disabled Active Directory user accounts.
+9. **Kerberos Pre-Authentication** — Identifies enabled accounts with Kerberos pre-authentication disabled.
+
+### Lab Environment
+
+| Component | Configuration |
+|---|---|
+| Domain Controller | DC01 |
+| Operating System | Windows Server 2025 |
+| Active Directory Domain | corp.example.test |
+| Workstation | CLIENT01 — Windows 11 Pro |
+| Scripting Language | PowerShell |
+| PowerShell Module | ActiveDirectory |
+| Audit Type | Read-only security assessment |
+
+### Verified Security Findings
+
+| Security Control | Audit Result |
+|---|---|
+| Password complexity | Enabled |
+| Minimum password length | 14 characters |
+| Password history | 24 passwords |
+| Maximum password age | 90 days |
+| Account lockout threshold | 5 attempts |
+| Lockout duration | 10 minutes |
+| Fine-grained password policies | None configured |
+| Enabled accounts with non-expiring passwords | 1 — Built-in Administrator |
+| Enabled accounts with PasswordNotRequired | None |
+| Accounts requiring password change | 2 test accounts |
+| Locked-out accounts | None |
+| Expired passwords | None detected |
+| Disabled accounts | Guest and krbtgt |
+| Enabled accounts without Kerberos pre-authentication | None |
+
+### PowerShell Automation
+
+**Script:** [Get-ADPasswordAudit.ps1](scripts/Get-ADPasswordAudit.ps1)
+
+Execute from an authorized Active Directory environment:
+
+```powershell
+.\Get-ADPasswordAudit.ps1
+```
+
+Export audit results to a text report:
+
+```powershell
+.\Get-ADPasswordAudit.ps1 *>&1 |
+    Out-File "ADPasswordAudit-Report.txt" -Encoding UTF8
+```
+
+The script performs read-only queries and does not modify Active Directory accounts, passwords, or security policies.
+
+### Technical Skills Demonstrated
+
+- Active Directory Domain Services (AD DS)
+- Windows Server 2025 administration
+- PowerShell security automation
+- Enterprise identity and access management (IAM)
+- Password policy assessment
+- Account lockout auditing
+- Kerberos authentication security
+- Security configuration analysis
+- Audit reporting and documentation
+
+### Outcome
+
+Successfully developed, executed, and validated a reusable Active Directory password security auditing script.
+
+The project demonstrates practical experience assessing enterprise authentication controls, identifying account security exceptions, and automating security reporting using PowerShell.
