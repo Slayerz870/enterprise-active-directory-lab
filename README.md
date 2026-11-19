@@ -622,3 +622,31 @@ The script performs read-only queries and does not modify Active Directory accou
 Successfully developed, executed, and validated a reusable Active Directory password security auditing script.
 
 The project demonstrates practical experience assessing enterprise authentication controls, identifying account security exceptions, and automating security reporting using PowerShell.
+
+## Milestone 144 — Active Directory Group Policy Security Auditing
+
+Developed and validated a read-only PowerShell auditing tool to assess Group Policy security across a Windows Server 2025 Active Directory environment.
+
+### Implementation
+- Inventoried all domain Group Policy Objects (GPOs).
+- Audited GPO links, enabled status, and enforcement settings.
+- Enumerated GPO security permissions and administrative trustees.
+- Identified custom access control entries requiring additional review.
+- Detected disabled GPO configuration sections.
+- Generated an audit report for administrative review.
+
+### Validation Results
+- **7 Group Policy Objects** successfully audited.
+- **8 enabled GPO links** identified.
+- **35 permission entries** examined.
+- **4 custom permission entries** identified on the default domain policies.
+- **0 disabled GPO configuration sections** detected.
+- No unexpected permission trustees identified during the review.
+
+### Technologies
+Windows Server 2025, Active Directory Domain Services, Group Policy Management, PowerShell, GroupPolicy Module, ActiveDirectory Module.
+
+### PowerShell Script
+[Get-ADGPOAudit.ps1](scripts/Get-ADGPOAudit.ps1)
+
+**Outcome:** Implemented automated Group Policy security auditing with visibility into policy configuration, organizational scope, administrative permissions, and custom access control entries.
