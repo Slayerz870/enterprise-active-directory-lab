@@ -799,3 +799,50 @@ Implemented and validated Windows Server Backup on a Windows Server 2025 domain 
 - Off-host backup storage is recommended for disaster recovery.
 
 **Documentation:** [Active Directory Backup & Recovery](AD-Backup-Recovery.md)
+
+
+---
+
+## Milestone 149 — Active Directory Security Monitoring & Reporting
+
+**Status: Completed — Monitoring Validated**
+
+Developed and tested a PowerShell security monitoring solution for Windows Server 2025 Active Directory.
+
+### Security Monitoring Capabilities
+
+- Kerberos authentication monitoring (4768, 4769)
+- Kerberos pre-authentication failure detection (4771)
+- NTLM credential validation monitoring (4776)
+- Failed logon detection (4625)
+- Account lockout monitoring (4740)
+- User account creation and deletion monitoring (4720, 4726)
+- Security group membership change monitoring (4728, 4732, 4756)
+- Security audit log clearing detection (1102)
+
+### Validation Results
+
+- Successfully processed 158 Security log events.
+- Identified 9 Kerberos pre-authentication failures.
+- Reviewed authentication accounts, source addresses, and failure codes.
+- Confirmed the monitoring script passed PowerShell syntax validation.
+- Generated a seven-day security monitoring report.
+
+### Security Findings
+
+- Six Kerberos failures involved the Administrator account.
+- Three Kerberos failures involved the securitytest account.
+- Failure code 0x18 was observed.
+- Historical source 192.168.16.129 could not be conclusively identified.
+- No security incident was confirmed.
+
+### Monitoring Script
+
+[Get-ADSecurityMonitoring.ps1](scripts/Get-ADSecurityMonitoring.ps1)
+
+### Limitations
+
+- Monitoring is performed on demand, not continuously.
+- Results depend on configured audit policies and retained event logs.
+- The report includes the latest 10 matching events per category.
+- Automated alerting and centralized log collection are not implemented.
