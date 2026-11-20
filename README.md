@@ -12,46 +12,29 @@
 - [Role-Based Access Control and Delegation](#role-based-access-control-and-delegation)
 - [Group Policy Security Baseline](#group-policy-security-baseline)
 - [Technical Skills Demonstrated](#technical-skills-demonstrated)
+- [Project Status](#project-status)
 - [Security Validation Screenshots](#security-validation-screenshots)
 - [Windows LAPS](#windows-laps--local-administrator-password-management)
-- [Active Directory Security Auditing](#milestone-142--active-directory-security-auditing)
-- [Password Security Auditing](#milestone-143--active-directory-password-security-auditing)
-- [Group Policy Security Auditing](#milestone-144--active-directory-group-policy-security-auditing)
-- [Privileged Access Auditing](#milestone-145--active-directory-privileged-access-security-auditing)
-- [Attack Surface Auditing](#milestone-146--active-directory-attack-surface-security-auditing)
-- [Kerberos Security Auditing](#milestone-147--kerberos-security-auditing)
-- [AD Backup and Recovery](#milestone-148--active-directory-backup--recovery)
-- [Security Monitoring and Reporting](#milestone-149--active-directory-security-monitoring--reporting)
+- [Security Auditing — Milestones 142–149](#milestone-142--active-directory-security-auditing)
+- [Backup and Recovery Documentation](AD-Backup-Recovery.md)
 
 ## Executive Summary
 
-Designed, deployed, secured, and validated a virtualized
-Microsoft Active Directory enterprise environment using
-Windows Server 2025, Windows 11 Pro, and VMware Workstation.
+Designed, deployed, secured, and validated a virtualized Microsoft Active Directory enterprise environment using Windows Server 2025, Windows 11 Pro, and VMware Workstation.
 
-This project demonstrates hands-on systems administration,
-identity and access management, endpoint security, Group Policy,
-PowerShell automation, and Active Directory security auditing.
+The project demonstrates hands-on systems administration, identity and access management, endpoint security, Group Policy, PowerShell automation, and Active Directory security auditing.
 
 ### Key Engineering Accomplishments
 
-- Built and administered an Active Directory domain with
-  integrated DNS and domain-joined Windows 11 workstations.
-- Implemented organizational unit structures, role-based
-  access controls, and least-privilege administrative delegation.
-- Deployed centralized Microsoft Defender, Windows Firewall,
-  Attack Surface Reduction, and Windows LAPS security policies.
-- Developed seven PowerShell security auditing and monitoring
-  scripts for Active Directory administration.
-- Implemented and verified Windows Server System State backups.
-- Investigated Kerberos authentication failures, account
-  lockouts, privileged access, and endpoint security events.
-- Documented configuration procedures, validation results,
-  security findings, and recovery limitations.
+- Built an Active Directory domain with integrated DNS and a domain-joined Windows 11 workstation.
+- Implemented departmental organizational units, role-based access controls, and least-privilege delegation.
+- Deployed Microsoft Defender, Windows Firewall, ASR audit policies, and Windows LAPS through Group Policy.
+- Developed seven PowerShell security auditing and monitoring scripts.
+- Completed and verified a Windows Server System State backup.
+- Investigated Kerberos authentication failures, account lockouts, and endpoint security events.
+- Documented technical configurations, validation evidence, findings, and recovery limitations.
 
-**Project Focus:** Enterprise Infrastructure Engineering,
-Windows Systems Administration, Identity Security,
-Security Automation, and Technical Troubleshooting.
+**Project Focus:** Enterprise infrastructure engineering, Windows systems administration, identity security, automation, and troubleshooting.
 
 ## Project Overview
 
@@ -62,60 +45,40 @@ The lab focuses on practical enterprise IT operations, security best practices, 
 ## Enterprise Lab Architecture
 
 ```text
-                 VMware Workstation
-                 VMnet8 NAT Network
-                   192.168.16.0/24
-                          |
-            +-------------+-------------+
-            |                           |
-     +------+------+             +------+------+
-     |    DC01     |             |  CLIENT01   |
-     | Windows     |             | Windows 11  |
-     | Server 2025 |             | Pro         |
-     |             |             |             |
-     | AD DS       |             | Domain      |
-     | DNS         |             | Joined      |
-     | Kerberos    |             | RSAT        |
-     | Group Policy|             | Defender    |
-     |             |             | Windows LAPS|
-     | 192.168.16.10             | DHCP Client |
-     +------+------+             +------+------+
-            |                           |
-            +-------------+-------------+
-                          |
-                  corp.example.test
+                     VMware Workstation
+                     VMnet8 NAT Network
+                       192.168.16.0/24
+                              |
+                 +------------+------------+
+                 |                         |
+          +------+-------+          +------+-------+
+          |     DC01     |          |   CLIENT01   |
+          | Windows      |          | Windows 11   |
+          | Server 2025  |          | Pro          |
+          |              |          |              |
+          | AD DS / DNS  |          | Domain joined|
+          | Kerberos     |          | RSAT         |
+          | Group Policy |          | Defender/ASR |
+          | 192.168.16.10|          | Windows LAPS |
+          +------+-------+          | DHCP client  |
+                 |                  +--------------+
+                 |
+          +------+-------------------+
+          | E: AD_Backup             |
+          | 60 GB virtual SCSI disk |
+          | System State backup     |
+          +--------------------------+
 
-     DC01 Backup Storage:
-     E: - 60 GB VMware Virtual SCSI Disk
-     Windows Server System State Backup
+              Domain: corp.example.test
 ```
 
-### Architecture Overview
+**DC01** provides AD DS, AD-integrated DNS, Kerberos authentication, Group Policy, and Active Directory security auditing. Its dedicated `E:` virtual disk holds a verified System State backup.
 
-**DC01 — Domain Controller**
-- Provides Active Directory Domain Services.
-- Hosts Active Directory-integrated DNS.
-- Processes Kerberos authentication.
-- Manages domain Group Policy.
-- Stores Windows LAPS encrypted password records.
-- Hosts the security auditing and monitoring scripts.
-- Maintains a dedicated System State backup volume.
+**CLIENT01** is a Windows 11 Pro domain-joined workstation that uses DC01 for DNS, receives centrally managed security policies, and supports remote administration using RSAT.
 
-**CLIENT01 — Domain-Joined Workstation**
-- Runs Windows 11 Pro.
-- Uses DC01 for domain DNS resolution.
-- Receives centralized Group Policy configurations.
-- Provides remote administration through RSAT.
-- Enforces Microsoft Defender and Windows Firewall policies.
-- Uses Windows LAPS for local administrator password management.
+**Network:** VMware Workstation VMnet8 NAT (`192.168.16.0/24`); DC01 uses `192.168.16.10`; CLIENT01 receives its address through DHCP.
 
-**Network Architecture**
-- Hypervisor: VMware Workstation
-- Virtual network: VMnet8 NAT
-- Domain: `corp.example.test`
-- Domain controller: `192.168.16.10`
-- Workstation: DHCP-assigned address
-- DNS: `192.168.16.10`
+**Recovery limitation:** The backup disk is on the same VMware host. An off-host copy and an isolated restoration test are still needed for stronger disaster-recovery assurance.
 
 ## Lab Infrastructure
 
@@ -198,47 +161,41 @@ Verified successful policy application on CLIENT01 using `gpupdate /force`, `gpr
 - VMware virtual networking
 - Enterprise troubleshooting and validation
 
-
 ## Project Status
 
-**Status: Operational Enterprise Active Directory Lab — 149 Technical Milestones Completed**
-
-Designed, deployed, secured, and validated a virtualized Windows enterprise environment using Windows Server 2025 and Windows 11 Pro.
+**Status: Operational Enterprise Active Directory Lab — Milestones 142–149 documented; Milestone 150 portfolio documentation in progress**
 
 ### Completed Infrastructure and Security Capabilities
 
 - Active Directory Domain Services and integrated DNS
-- Domain-joined Windows 11 workstation administration
-- Organizational Unit architecture and role-based access control
-- Least-privilege administrative delegation
+- Domain-joined Windows 11 administration
+- Organizational unit architecture and least-privilege delegation
 - Centralized Group Policy security baselines
-- Microsoft Defender Antivirus and Windows Firewall management
-- Microsoft Defender Attack Surface Reduction auditing
+- Microsoft Defender Antivirus, Windows Firewall, and ASR audit policies
 - Windows LAPS encrypted local administrator password management
 - Domain password and account lockout policies
-- Kerberos authentication security auditing
-- Privileged access and attack-surface assessments
+- Kerberos, privileged-access, and attack-surface security auditing
 - Seven PowerShell security auditing and monitoring scripts
 - Windows Server System State backup and catalog verification
 - Security event investigation and reporting
 
 ### Validation Status
 
-- **Infrastructure:** Operational
-- **Active Directory authentication:** Validated
-- **Group Policy enforcement:** Validated
-- **Security auditing:** Validated
-- **System State backup:** Completed successfully
-- **Disaster recovery restore test:** Not yet performed
-- **Automated security alerting:** Not implemented
+| Area | Status |
+|---|---|
+| AD DS and domain authentication | Validated in lab |
+| Group Policy application | Validated on CLIENT01 |
+| Security auditing and reporting | Validated on DC01 |
+| System State backup | Completed successfully; catalog checked |
+| Disaster recovery restore | Not tested |
+| Continuous monitoring and automated alerting | Not implemented |
 
 ### Future Enhancements
 
 - Test Active Directory restoration in an isolated environment.
-- Implement off-host backup storage.
+- Maintain off-host backups.
 - Introduce centralized security log collection.
-- Develop automated security alerts and scheduled reporting.
-
+- Implement scheduled monitoring and alerting.
 
 ## Security Validation Screenshots
 
@@ -604,6 +561,7 @@ These results are consistent with the intended least-privilege configuration. No
 ![Windows LAPS Least-Privilege Validation](screenshots/laps-unauthorized-access-validation.png)
 
 The managed administrator password is not exposed in the repository.
+
 
 ## Milestone 142 — Active Directory Security Auditing
 
