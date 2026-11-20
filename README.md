@@ -768,3 +768,34 @@ Developed a read-only PowerShell auditing tool that examines KRBTGT account prop
 The script generates a structured security report at `C:\Scripts\ADKerberos-Report.txt`.
 
 **Status:** Completed — November 19, 2026.
+
+
+---
+
+## Milestone 148 — Active Directory Backup & Recovery
+
+**Status: Completed — Backup Verified**
+
+Implemented and validated Windows Server Backup on a Windows Server 2025 domain controller.
+
+### Implementation
+- Installed Windows Server Backup.
+- Provisioned a dedicated 60 GB VMware virtual backup disk.
+- Initialized the disk using GPT and formatted it as NTFS.
+- Configured the `E:` volume for Active Directory backups.
+- Successfully completed a System State backup using `wbadmin`.
+
+### Verification
+- Confirmed successful backup completion.
+- Verified the backup version in the Windows Server Backup catalog.
+- Confirmed NTDS, SYSVOL, and Registry components were included.
+- Verified backup storage health and available capacity.
+- Confirmed backup files exist on the dedicated backup volume.
+
+### Recovery Readiness
+- System State recovery is available in the backup catalog.
+- Recovery procedures and limitations are documented.
+- A test restore has not yet been performed.
+- Off-host backup storage is recommended for disaster recovery.
+
+**Documentation:** [Active Directory Backup & Recovery](AD-Backup-Recovery.md)
