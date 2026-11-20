@@ -2,6 +2,27 @@
 
 **Windows Server 2025 | Windows 11 Pro | Active Directory | Group Policy | VMware Workstation**
 
+## Table of Contents
+
+- [Executive Summary](#executive-summary)
+- [Project Overview](#project-overview)
+- [Enterprise Lab Architecture](#enterprise-lab-architecture)
+- [Lab Infrastructure](#lab-infrastructure)
+- [Active Directory Architecture](#active-directory-architecture)
+- [Role-Based Access Control and Delegation](#role-based-access-control-and-delegation)
+- [Group Policy Security Baseline](#group-policy-security-baseline)
+- [Technical Skills Demonstrated](#technical-skills-demonstrated)
+- [Security Validation Screenshots](#security-validation-screenshots)
+- [Windows LAPS](#windows-laps--local-administrator-password-management)
+- [Active Directory Security Auditing](#milestone-142--active-directory-security-auditing)
+- [Password Security Auditing](#milestone-143--active-directory-password-security-auditing)
+- [Group Policy Security Auditing](#milestone-144--active-directory-group-policy-security-auditing)
+- [Privileged Access Auditing](#milestone-145--active-directory-privileged-access-security-auditing)
+- [Attack Surface Auditing](#milestone-146--active-directory-attack-surface-security-auditing)
+- [Kerberos Security Auditing](#milestone-147--kerberos-security-auditing)
+- [AD Backup and Recovery](#milestone-148--active-directory-backup--recovery)
+- [Security Monitoring and Reporting](#milestone-149--active-directory-security-monitoring--reporting)
+
 ## Executive Summary
 
 Designed, deployed, secured, and validated a virtualized
