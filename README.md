@@ -522,7 +522,7 @@ PowerShell verification confirmed:
 - Managed account: `LabAdmin`
 - Password expiration scheduled 30 days after the successful update
 
-- ## Windows LAPS — Least-Privilege Access Validation
+## Windows LAPS — Least-Privilege Access Validation
 
 ### Objective
 
