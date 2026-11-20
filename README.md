@@ -581,10 +581,6 @@ These results are consistent with the intended least-privilege configuration. No
 
 The managed administrator password is not exposed in the repository.
 
-### Evidence
-
-![Windows LAPS Encrypted Password Validation](screenshots/laps-ad-password-validation.png)
-
 ## Milestone 142 — Active Directory Security Auditing
 
 ### Overview
