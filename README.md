@@ -38,6 +38,64 @@ Designed and deployed a virtualized Windows enterprise environment to demonstrat
 
 The lab focuses on practical enterprise IT operations, security best practices, and least-privilege administration.
 
+## Enterprise Lab Architecture
+
+```text
+                 VMware Workstation
+                 VMnet8 NAT Network
+                   192.168.16.0/24
+                          |
+            +-------------+-------------+
+            |                           |
+     +------+------+             +------+------+
+     |    DC01     |             |  CLIENT01   |
+     | Windows     |             | Windows 11  |
+     | Server 2025 |             | Pro         |
+     |             |             |             |
+     | AD DS       |             | Domain      |
+     | DNS         |             | Joined      |
+     | Kerberos    |             | RSAT        |
+     | Group Policy|             | Defender    |
+     |             |             | Windows LAPS|
+     | 192.168.16.10             | DHCP Client |
+     +------+------+             +------+------+
+            |                           |
+            +-------------+-------------+
+                          |
+                  corp.example.test
+
+     DC01 Backup Storage:
+     E: - 60 GB VMware Virtual SCSI Disk
+     Windows Server System State Backup
+```
+
+### Architecture Overview
+
+**DC01 — Domain Controller**
+- Provides Active Directory Domain Services.
+- Hosts Active Directory-integrated DNS.
+- Processes Kerberos authentication.
+- Manages domain Group Policy.
+- Stores Windows LAPS encrypted password records.
+- Hosts the security auditing and monitoring scripts.
+- Maintains a dedicated System State backup volume.
+
+**CLIENT01 — Domain-Joined Workstation**
+- Runs Windows 11 Pro.
+- Uses DC01 for domain DNS resolution.
+- Receives centralized Group Policy configurations.
+- Provides remote administration through RSAT.
+- Enforces Microsoft Defender and Windows Firewall policies.
+- Uses Windows LAPS for local administrator password management.
+
+**Network Architecture**
+- Hypervisor: VMware Workstation
+- Virtual network: VMnet8 NAT
+- Domain: `corp.example.test`
+- Domain controller: `192.168.16.10`
+- Workstation: DHCP-assigned address
+- DNS: `192.168.16.10`
+
 ## Lab Infrastructure
 
 | Component | Configuration |
