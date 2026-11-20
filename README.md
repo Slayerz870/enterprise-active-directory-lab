@@ -198,23 +198,47 @@ Verified successful policy application on CLIENT01 using `gpupdate /force`, `gpr
 - VMware virtual networking
 - Enterprise troubleshooting and validation
 
+
 ## Project Status
 
-**Functional lab — ongoing development**
+**Status: Operational Enterprise Active Directory Lab — 149 Technical Milestones Completed**
 
-Completed security implementations include delegated
-administration, workstation firewall enforcement through
-Group Policy, domain account lockout protection,
-domain password policy hardening, and Windows Security
-Event auditing.
+Designed, deployed, secured, and validated a virtualized Windows enterprise environment using Windows Server 2025 and Windows 11 Pro.
 
-Validated security events include Event ID 4740
-(account lockout), Event ID 4771 (Kerberos authentication
-failure), and Event ID 4724 (administrative password reset).
+### Completed Infrastructure and Security Capabilities
 
-Planned enhancements include additional Group Policy
-security controls, administrative activity monitoring,
-and automated system administration.
+- Active Directory Domain Services and integrated DNS
+- Domain-joined Windows 11 workstation administration
+- Organizational Unit architecture and role-based access control
+- Least-privilege administrative delegation
+- Centralized Group Policy security baselines
+- Microsoft Defender Antivirus and Windows Firewall management
+- Microsoft Defender Attack Surface Reduction auditing
+- Windows LAPS encrypted local administrator password management
+- Domain password and account lockout policies
+- Kerberos authentication security auditing
+- Privileged access and attack-surface assessments
+- Seven PowerShell security auditing and monitoring scripts
+- Windows Server System State backup and catalog verification
+- Security event investigation and reporting
+
+### Validation Status
+
+- **Infrastructure:** Operational
+- **Active Directory authentication:** Validated
+- **Group Policy enforcement:** Validated
+- **Security auditing:** Validated
+- **System State backup:** Completed successfully
+- **Disaster recovery restore test:** Not yet performed
+- **Automated security alerting:** Not implemented
+
+### Future Enhancements
+
+- Test Active Directory restoration in an isolated environment.
+- Implement off-host backup storage.
+- Introduce centralized security log collection.
+- Develop automated security alerts and scheduled reporting.
+
 
 ## Security Validation Screenshots
 
