@@ -2,6 +2,36 @@
 
 **Windows Server 2025 | Windows 11 Pro | Active Directory | Group Policy | VMware Workstation**
 
+## Executive Summary
+
+Designed, deployed, secured, and validated a virtualized
+Microsoft Active Directory enterprise environment using
+Windows Server 2025, Windows 11 Pro, and VMware Workstation.
+
+This project demonstrates hands-on systems administration,
+identity and access management, endpoint security, Group Policy,
+PowerShell automation, and Active Directory security auditing.
+
+### Key Engineering Accomplishments
+
+- Built and administered an Active Directory domain with
+  integrated DNS and domain-joined Windows 11 workstations.
+- Implemented organizational unit structures, role-based
+  access controls, and least-privilege administrative delegation.
+- Deployed centralized Microsoft Defender, Windows Firewall,
+  Attack Surface Reduction, and Windows LAPS security policies.
+- Developed seven PowerShell security auditing and monitoring
+  scripts for Active Directory administration.
+- Implemented and verified Windows Server System State backups.
+- Investigated Kerberos authentication failures, account
+  lockouts, privileged access, and endpoint security events.
+- Documented configuration procedures, validation results,
+  security findings, and recovery limitations.
+
+**Project Focus:** Enterprise Infrastructure Engineering,
+Windows Systems Administration, Identity Security,
+Security Automation, and Technical Troubleshooting.
+
 ## Project Overview
 
 Designed and deployed a virtualized Windows enterprise environment to demonstrate Active Directory administration, organizational unit design, role-based access control (RBAC), delegated administration, and centralized workstation security management.
